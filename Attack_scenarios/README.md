@@ -12,8 +12,8 @@ python3 -m venv ics-env
 source ics-env/bin/activate
 ```
 
-### *Installing network tools* 
-Network tools used for scanning and penetration testing in the ICS testbed
+## *Installing network tools* 
+Network tools used for scanning and penetration testing in the ICS testbed, you might install them in the attacker's machine, the choice is yours. Since we are using docker, there's no need for sudo. The testbed is really flexible so you could any other tool of your choice. 
 
 Run:
 ```
@@ -32,12 +32,62 @@ apt install nmap
 apt install arp-scan
 # Install telnet to test connectivity
 apt install -y telnet
-# Install nikto 
-apt install nikto -y
-# Install whatweb
-apt install whatweb -y
 # Install network discover for scanning
 apt install netdiscover
+apt install -y curl
+```
+
+## *Installing network and web pentesting tools* 
+Some tools were used to infiltrate the network 
+
+Run: 
+```
 # Install netcat for network pentesting
 apt install netcat-traditional
+# Install arpspoof for arp spoofing attacks
+apt install -y dsniff
+# Install whatweb for Web application fingerprinting tool
+apt install whatweb -y
+# Install nikto for Web vulnerability scanner
+apt install nikto -y
+# Install medusa for Fast, parallel password brute-forcing tool
+apt install -y medusa
 ```
+
+## *Some usage examples*
+Here, we show some usage examples, but more details are found in respective scenarios
+
+Run this to scan the Scada networks
+```
+# Network discovery
+nmap -sn target_network_ip
+# Modbus port scan
+nmap -p 502 target-ip  
+# Network scan
+arp-scan --interface=eth0 172.18.0.0/24
+```
+
+Run this to spoof two targets (Example plc and scadaBR)
+```
+# Example spoofing plc11 and scadaBR
+arpspoof -i eth0 -t plc_ip scadaBR_ip
+arpspoof -i eth0 -t scadaBR_ip plc_ip 
+```
+
+Run this to capture traffic between targets
+```
+# Capture any modbus traffic generating a pcap file afterward
+tcpdump -i eth0 -w capture.pcap port 502
+# Caputre traffic going towards a target
+tcpdump -i eth0 dst target_ip
+```
+
+Run this to exploit some web vulnerabilities (Example scadaBR)
+```
+# Recall scadaBR is exposed to 8080 when its container is launched
+whatweb http://scadaBR-ip:8080
+nikto -h http://target-ip:8080
+# Brute force attacks on target ip
+medusa -h target-ip -u admin -P passwords.txt -M http
+```
+

@@ -1,68 +1,7 @@
 # ICS_Water_testbed_cyber
 Attack scenarios and Mitigation solutions on a docker based simulated ICS environment
-## ICS Water Testbed - Tools Installation Guide
-This README provides installation instructions for all basic tools used in the Industrial Control Systems (ICS) cybersecurity testbed research. Complex tools are documented in their respective folders
 
 
-# Usage example:
-# tcpdump -i eth0 -w capture.pcap port 502
-Nmap
-Purpose: Network discovery and security scanning tool.
-
-bash
-sudo apt install -y nmap
-
-# Usage examples:
-# nmap -sn 192.168.1.0/24    # Network discovery
-# nmap -p 502 target-ip      # Modbus port scan
-arp-scan
-Purpose: ARP scanning tool for discovering devices on local network.
-
-bash
-sudo apt install -y arp-scan
-
-# Usage example:
-# arp-scan -l
-dsniff (arpspoof)
-Purpose: ARP spoofing tool for man-in-the-middle attacks.
-
-bash
-sudo apt install -y dsniff
-
-# Usage example:
-# arpspoof -i eth0 -t target1 target2
-Web Application Testing
-WhatWeb
-Purpose: Web application fingerprinting tool to identify technologies and frameworks.
-
-bash
-sudo apt install -y whatweb
-
-# Usage example:  
-# whatweb http://target-ip:8080
-Nikto
-Purpose: Web vulnerability scanner for identifying security issues in web applications.
-
-bash
-sudo apt install -y nikto
-
-# Usage example:
-# nikto -h http://target-ip:8080
-Medusa
-Purpose: Fast, parallel password brute-forcing tool for various protocols.
-
-bash
-sudo apt install -y medusa
-
-# Usage example:
-# medusa -h target-ip -u admin -P passwords.txt -M http
-Security Testing Frameworks
-Metasploit Framework
-Purpose: Penetration testing framework for developing and executing exploit code.
-
-bash
-# Install dependencies
-sudo apt install -y curl wget gnupg2 software-properties-common
 
 # Add Metasploit repository
 curl https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb > msfinstall
