@@ -1,4 +1,4 @@
-# Manual for Attack Scenarios
+# Manual for Attack Scenarios on PLCs
 
 ## *ICS Network  network environment*
 At this level, we consider you've installed the original testbed network (i.e from Yi Zhu's work). No mitigation solution has been implemented yet so all the components in the swat network can communicate with each other, no isolation nor segmentation is implemented yet.
@@ -56,7 +56,7 @@ docker exec -it plc11 bash
 docker exec -it plc12 bash 
 ```
 
-**NB:** There are 06 PLC in total, from PLC11 ... PLC16, there are in the same network named (swat) with their port number corresponding to their names 
+**NB:** There are 06 PLCs in total, from PLC11 ... PLC16, they are in the same network named (swat) with their port number corresponding to their names 
 **Ex :** Name :  PLC11, Port : 10011
 
 ## *Setting up the attacker's machine*
@@ -232,5 +232,6 @@ CPU overwhelmed after attack:
 
 ![Screenshot](images/db//3.png)
 
+## Summary
 
-
+As you could see, implementing attacks is really easy to do, you could even more PLCS if you wish. Add more scripts and test them on ICS components easily. We experimented other testbeds and I can assure you, this is one of the easiest low-cost testbed to use for ICS security.
