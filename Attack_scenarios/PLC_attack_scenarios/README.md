@@ -157,6 +157,6 @@ shell
 python3 db-attack.py
 ```
 
-![Screenshot](images/db/attack%20succeded,%20information%20about%20plc11%20database.png.png)
+![Screenshot](images/db/2.png)
 
 
