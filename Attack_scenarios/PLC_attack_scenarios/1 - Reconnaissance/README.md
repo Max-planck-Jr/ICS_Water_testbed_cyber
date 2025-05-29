@@ -1,6 +1,6 @@
 # Manual for Reconnaissance on PLCs
 
-Most complex APT attacks start with this phase, information gathering then crafting an exploit to counter attack. This can also be done in this simple testbed. Assuming the attacker is already in the network, he could gather a lot of information
+Most complex attacks complex or simple start with this phase, information gathering then crafting an exploit to counter attack. This can also be done in this simple testbed. Assuming the attacker is already in the network, he could gather a lot of information
 
 ## *ICS Network  network environment*
 At this level, we consider you've installed the original testbed network (i.e from Yi Zhu's work). No mitigation solution has been implemented yet so all the components in the swat network can communicate with each other, no isolation nor segmentation is implemented yet.
@@ -19,7 +19,7 @@ Displays the list of containers, you should have 06 plcs running, scadaBR and si
    - **Role:** Simulates a HMI and Historian in the Scada Network.
    - **Network:**
      - `Name` (Swat) 
-     - `Ip address` (IP: 172.18.0.9)
+     - `Ip address` (IP: 172.18.0.10)
    - **Ports:** 10010:8080
 
 **PLC11**
@@ -96,9 +96,9 @@ Attacker's terminal
 nmap -sn 172.18.0.0/24
 arp-scan --interface=eth0 172.18.0.0/24
 ```
-![Screenshot](images/db/4.png)
+![Screenshot](../images/db/4.png)
 
-![Screenshot](images/db/5.png)
+![Screenshot](../images/db/5.png)
 
 You could find some information on the plcs found in the network
 
@@ -110,8 +110,8 @@ tcpdump and wireshark were used for this, they are very easy to install on linux
 
 Attacker's terminal
 ```
-arpspoof -i eth0 -t 172.18.0.9 172.18.0.11
-arpspoof -i eth0 -t 172.18.0.11 172.18.0.9
+arpspoof -i eth0 -t 172.18.0.10 172.18.0.11
+arpspoof -i eth0 -t 172.18.0.11 172.18.0.10
 ```
 
 - You have to do this on two different terminals. Afterword, you could run tcpdump command on another terminal
@@ -123,6 +123,7 @@ tcpdump -i eth0 port 502 -w modbus_traffic.pcap
 
 - After capturing the pcap file, you could analyze it with wireshark. For sure, you will discover various security flaws that you could exploit
 - The testbed's flexibility even enables you transfer the pcap file to you host for other analysis if you wish. 
+- There're some pcap samples found in `Captured_packets`
 
 bash
 ```
