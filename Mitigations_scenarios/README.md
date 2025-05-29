@@ -1,7 +1,3 @@
-# Usage: Simply run 'htop' to monitor CPU, memory, and processes
-Network Security Tools
-iptables
-Purpose: Linux firewall utility for configuring network packet filtering rules.
+# Mitigation solutions
 
-bash
-sudo apt install -y iptables iptables-persistent
+Each Mitigation strategie show how flexible the testbed is, you could configure your solutions with ease and adapt it easily to the original flat network. 
