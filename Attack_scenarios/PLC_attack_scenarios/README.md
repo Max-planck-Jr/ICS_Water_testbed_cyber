@@ -1,5 +1,4 @@
-# Setting Up Attack Scenarios
-
+# Manual for Attack Scenarios
 
 ## *ICS Network  network environment*
 At this level, we consider you've installed the original testbed network (i.e from Yi Zhu's work). No mitigation solution has been implemented yet so all the components in the swat network can communicate with each other, no isolation nor segmentation is implemented yet.
@@ -12,7 +11,7 @@ Docker Containers
 docker ps 
 ```
 
-Displays the list of containers, 
+Displays the list of containers, you should have 06 plcs running, scadaBR and sim running.
 
 **ScadaBR**
    - **Role:** Simulates a HMI and Historian in the Scada Network.
@@ -232,4 +231,6 @@ htop
 CPU overwhelmed after attack: 
 
 ![Screenshot](images/db//3.png)
+
+
 

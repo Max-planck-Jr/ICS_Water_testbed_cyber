@@ -1,5 +1,16 @@
-# ICS Water Testbed - Tools Installation Guide
+# User Guide on Attack Scenarios
+
+This is a simple guide presenting the tools used, more details are provided in each respective attack scenario.
+
+
+## ICS Water Testbed - Tools Installation Guide
 This README provides installation instructions for all basic tools used in the Industrial Control Systems (ICS) cybersecurity testbed research. Complex tools are documented in their respective scenarios
+
+## Advantages of this testbed for attack scenarios
+- **Repeatability:** Attack scenarios can be executed multiple times with identical conditions for thorough analysis and validation. You will find it very easy to execute scripts and commands.
+- **Modular Architecture:** Each ICS component (PLCs, SCADA, physical simulation) runs in separate Docker containers, you can easily run any component you wish, you could even configure it as you wish. 
+- **Extensible framework:** New attack scenarios can be added without modifying core system components. You simply add the attacker in the same network and start experimenting. It is really flexible and easy to implement when you have basic knowlege in dockers.
+- **One-command deployment:** The entire testbed can be launched with minimal user intervention.
 
 ## *NB:*
 Most of these tools would be found in the Dockerfile of corresponding components, nevertheless, the testbed's flexibility enables you to install any tool you wish
