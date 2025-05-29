@@ -160,3 +160,23 @@ python3 db-attack.py
 ![Screenshot](images/db/2.png)
 
 
+## *Scenario - 2 : Code injection attack in plc*
+
+The attacker changes the code logic of the plc without stopping it or without being detected. This change's the plc's logic and eventually disrupts the physical process
+
+- As in the scenario 1, the attacker uploads a `code-injection.py` script in the target's machine, you could find the script in the `Attack_scripts` folder
+- He uses the same attack method as in scenario 1
+
+Meterpreter terminal
+```
+upload /scripts/code-injection.py /workdir
+```
+
+- The attacker can now execute the script into the target's machine, he needs the ip address and the modbus port number. He eventually obtained them from the reconnaissance phase
+
+Meterpreter terminal
+```
+shell
+python3 code-injection.py -t 172.18.0.11 -p 502
+```
+
