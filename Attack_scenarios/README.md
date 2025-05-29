@@ -1,5 +1,8 @@
 # ICS Water Testbed - Tools Installation Guide
-This README provides installation instructions for all basic tools used in the Industrial Control Systems (ICS) cybersecurity testbed research. Complex tools are documented in their respective folders
+This README provides installation instructions for all basic tools used in the Industrial Control Systems (ICS) cybersecurity testbed research. Complex tools are documented in their respective scenarios
+
+## *NB: *
+Most of these tools would be found in the Dockerfile of corresponding components, nevertheless, the testbed's flexibility enables you to install any tool you wish
 
 ## *Installing virtual environment* 
 Some python librairies must be installed in virtual env.
@@ -89,5 +92,15 @@ whatweb http://scadaBR-ip:8080
 nikto -h http://target-ip:8080
 # Brute force attacks on target ip
 medusa -h target-ip -u admin -P passwords.txt -M http
+```
+
+## Some attacking scripts developped by Matrix
+Matrix written by Karl contains several attack scripts used to exploit modbus vulnerabilites. Don't hesitate to get to his git hub repository for more details.
+
+bash
+```
+# Clone the repository
+git clone https://github.com/SpiderLabs/MATRIX.git
+cd MATRIX
 ```
 
