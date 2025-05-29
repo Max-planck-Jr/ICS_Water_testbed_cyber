@@ -1,7 +1,7 @@
 # ICS Water Testbed - Tools Installation Guide
 This README provides installation instructions for all basic tools used in the Industrial Control Systems (ICS) cybersecurity testbed research. Complex tools are documented in their respective scenarios
 
-## *NB: *
+## *NB:*
 Most of these tools would be found in the Dockerfile of corresponding components, nevertheless, the testbed's flexibility enables you to install any tool you wish
 
 ## *Installing virtual environment* 
