@@ -1,70 +1,8 @@
 # ICS_Water_testbed_cyber
 Attack scenarios and Mitigation solutions on a docker based simulated ICS environment
-ICS Water Testbed - Tools Installation Guide
-This README provides installation instructions for all tools used in the Industrial Control Systems (ICS) cybersecurity testbed research.
+## ICS Water Testbed - Tools Installation Guide
+This README provides installation instructions for all basic tools used in the Industrial Control Systems (ICS) cybersecurity testbed research. Complex tools are documented in their respective folders
 
-Table of Contents
-ICS/SCADA Components
-Network Analysis Tools
-Web Application Testing
-Security Testing Frameworks
-Monitoring and Logging
-Network Security Tools
-Database Tools
-Development Environment
-System Utilities
-Quick Installation Script
-ICS/SCADA Components
-OpenPLC
-Purpose: Open-source PLC runtime that executes ladder logic programs and communicates via Modbus/TCP.
-
-bash
-# Install dependencies
-sudo apt update
-sudo apt install -y build-essential pkg-config bison flex autoconf automake libtool make git
-
-# Clone and build OpenPLC
-git clone https://github.com/thiagoralves/OpenPLC_v3.git
-cd OpenPLC_v3
-./install.sh linux
-ScadaBR
-Purpose: Open-source SCADA system for monitoring and controlling industrial processes via web interface.
-
-bash
-# Prerequisites
-sudo apt install -y openjdk-8-jdk tomcat9 mysql-server
-
-# Download and install ScadaBR
-wget http://sourceforge.net/projects/scadabr/files/Software/ScadaBR_1.1.0_Installer.jar
-java -jar ScadaBR_1.1.0_Installer.jar
-Python Libraries for Process Simulation
-Purpose: Libraries for implementing the physical process simulator and Modbus communication.
-
-bash
-# Create virtual environment
-python3 -m venv ics-env
-source ics-env/bin/activate
-
-# Install required libraries
-pip install pymodbus          # Modbus protocol implementation
-pip install pyModbusTCP       # Alternative Modbus TCP library
-pip install pyyaml            # YAML configuration parsing
-pip install numpy             # Numerical calculations
-pip install matplotlib        # Data visualization
-pip install requests          # HTTP requests
-Network Analysis Tools
-Wireshark
-Purpose: Network protocol analyzer for capturing and analyzing Modbus/TCP traffic.
-
-bash
-sudo apt install -y wireshark
-sudo usermod -aG wireshark $USER
-# Logout and login to apply group changes
-tcpdump
-Purpose: Command-line packet analyzer for network traffic capture.
-
-bash
-sudo apt install -y tcpdump
 
 # Usage example:
 # tcpdump -i eth0 -w capture.pcap port 502
