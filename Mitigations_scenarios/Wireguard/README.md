@@ -1,4 +1,4 @@
-# Securing SCADA Communications with WireGuard in DockerSecuring SCADA Communications with WireGuard in Docker
+# Securing SCADA Communications with WireGuard in Docker Securing SCADA Communications with WireGuard in Docker
 
 This section demonstrates how to securely tunnel communication between a PLC and ScadaBR using WireGuard inside a Docker container, effectively securing industrial communication paths in a SCADA environment.
 
@@ -57,30 +57,30 @@ docker compose up -d
 
 ## Access the WireGuard Web UI
 
-Open `http://<host-ip>:51821` in your browser.
+Open `http://localhost:51821` in your browser.
 
 ![Screenshot](../images/wireguard/wireguard%20sign%20in.png)
 
 - In the admin panel, add a new client or peer that will be used by the PLC (clients)
 
-![Screenshot](../images/wireguard/wiregaurd%20admin%20panel%20plc11%20peer.png)
+![Screenshot](../images/wireguard/plc%20config%20on%20admin%20panel.png)
 
 - Download the config file 
 
-![Screenshot](../images/wireguard/plc%20config%20on%20admin%20panel.png)
+![Screenshot](../images/wireguard/wiregaurd%20admin%20panel%20plc11%20peer.png)
 
 - Install WireGuard on the PLC
+
+bash
+```
+docker exec -it plc11 bash
+```
 
 plc terminal
 ```
 apt update && apt install wireguard
 ```
 - After installing wireguard on the clients, that is the plcs we have to generate keys in the plcs (PLC11 on this case)
-
-bash
-```
-docker exec -it plc11 bash
-```
 
 plc11 bash
 ```
