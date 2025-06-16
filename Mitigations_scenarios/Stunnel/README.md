@@ -22,6 +22,7 @@ This guide shows you how to **secure Modbus TCP connections** between PLCs and a
 
 ## Stunnel structure 
 
+```
 Stunnel/
 ├── README.md 
 ├── Scadabr_config/
@@ -32,6 +33,7 @@ Stunnel/
     ├── Dockerfile
     ├── plc11-client.conf
     └── ca-certs.pem
+```
 
 ## How to use stunnel in the simulated ICS testbed
 
