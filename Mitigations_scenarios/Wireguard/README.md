@@ -129,7 +129,7 @@ In the `Peer` section:
 - In the wireguard container, make sure you add NAT rule to allow traffic from `10.8.0.0/24` (VPN)  to reach the Docker bridge network `swat` *172.18.0.0/24*
 
 wg-easy
-```
+```bash
 # Allow forwarding between WireGuard and Docker network
 iptables -A FORWARD -i wg0 -o docker0 -j ACCEPT
 iptables -A FORWARD -i docker0 -o wg0 -j ACCEPT
@@ -141,7 +141,7 @@ iptables -t nat -A POSTROUTING -s 10.0.0.0/24 -o docker0 -j MASQUERADE
 - In the scadaBr container, we have to add a route so that it could communicate with the plcs in the virtual network
 
 Scadabr bash
-```
+```bash
 ip route add 10.8.0.0/24 via 172.18.0.2
 ```
 

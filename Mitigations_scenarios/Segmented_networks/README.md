@@ -25,7 +25,7 @@ In the segmented architecture, each logical ICS zone is assigned a dedicated sub
 The `create_docker_network.sh` found in the testbed realized by Yi, script sets up a flat swat Docker network (172.18.0.0/24) and launches all services on it.
 
 To deploy
-```
+```bash
 chmod +x create_docker_network.sh
 sudo ./create_docker_network.sh
 ```
@@ -35,7 +35,7 @@ sudo ./create_docker_network.sh
 For a segmented deployment, use the additional script:
 
 `create_segmented_networks.sh`
-```
+```bash
 #!/bin/bash
 
 echo "Creating segmented Docker networks..."
@@ -80,7 +80,7 @@ docker network connect supervisory_field router_1
 
 ## Container Attachment Example
 
-```
+```bash
 #!/bin/bash
 (
 cd "OpenPLC_v3_customized" || exit 1

