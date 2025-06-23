@@ -1,0 +1,6 @@
+# PLC rules for the segmented network scenario
+# This file contains iptables rules for the PLC network segment
+- ip route del default via 172.18.2.1
+- ip route add default via 172.18.2.2
+- ip route add 172.18.1.0/24 via 172.18.2.2
+- ip route add 172.18.3.0/24 via 172.18.2.2
