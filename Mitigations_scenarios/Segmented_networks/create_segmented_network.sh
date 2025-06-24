@@ -3,9 +3,6 @@
 
 echo "Creating Purdue Model Network Segmentation..."
 
-# Create the main backbone network
-docker network create --driver=bridge --subnet=172.18.0.0/16  --gateway=172.18.0.1 backbone_network
-
 # Create subnet networks
 echo "Creating subnets..."
 
